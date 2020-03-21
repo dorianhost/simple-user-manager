@@ -1,0 +1,20 @@
+# IDE
+.idea
+.vscode
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Node
+/node_modules
+
+# ENV data
+.env
+
+# Typescript
+/dist
+
+#Local db
+postgres-data

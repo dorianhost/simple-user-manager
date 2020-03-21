@@ -1,0 +1,8 @@
+{
+  "name": "simple-user-manager",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Vladyslav Marchuk <valdis86@gmail.com>",
+  "license": "UNLICENSED",
+  "private": false
+}

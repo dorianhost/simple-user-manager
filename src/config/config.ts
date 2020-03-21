@@ -1,5 +1,5 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { AppError } from '../errors/app-error';
+import { AppError } from '../errors/AppError';
 
 function getEnvValue(envKey: string): string | number | boolean {
   const value = process.env[envKey];

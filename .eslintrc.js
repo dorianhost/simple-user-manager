@@ -15,9 +15,10 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier/@typescript-eslint',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended'
   ],
   rules: {
-    'no-unused-vars': ['error', { 'vars': 'all', 'args': 'none' }],
+    'no-unused-vars': ['error', { vars: 'all', args: 'none' }],
+    '@typescript-eslint/interface-name-prefix': ['off']
   }
-}
+};

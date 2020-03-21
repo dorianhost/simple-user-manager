@@ -1,7 +1,8 @@
-export class AppError extends Error {
+import { BaseError } from './BaseError';
+
+export class AppError extends BaseError {
   constructor(public code: string, public message: string, public status?: number) {
     super(message);
-    Error.captureStackTrace(this, this.constructor);
   }
 
   toString(): string {

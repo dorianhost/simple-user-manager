@@ -10,3 +10,9 @@ export async function getConnection(): Promise<Connection> {
 
   return connection;
 }
+
+export async function rawSQL<T>(query: string, parameters?: any[]): Promise<T[]> {
+  const connection = await getConnection();
+
+  return connection.query(query, parameters);
+}

@@ -1,7 +1,7 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import { AppError } from '../errors/AppError';
 
-function getEnvValue(envKey: string): string | number | boolean | undefined {
+function getEnvValueOrFail(envKey: string): string | number | boolean {
   const value = process.env[envKey];
 
   if (!value) {
@@ -11,14 +11,18 @@ function getEnvValue(envKey: string): string | number | boolean | undefined {
   return value;
 }
 
+function getEnvValue(envKey: string): string | number | boolean | undefined {
+  return process.env[envKey];
+}
+
 export const config: AppConfig = {
-  environment: String(getEnvValue('NODE_ENV')),
+  environment: String(getEnvValueOrFail('NODE_ENV')),
   database: {
-    host: String(getEnvValue('DB_HOST')),
-    port: Number(getEnvValue('DB_PORT')),
-    database: String(getEnvValue('DB_NAME')),
-    username: String(getEnvValue('DB_USER')),
-    password: String(getEnvValue('DB_PASS')),
+    host: String(getEnvValueOrFail('DB_HOST')),
+    port: Number(getEnvValueOrFail('DB_PORT')),
+    database: String(getEnvValueOrFail('DB_NAME')),
+    username: String(getEnvValueOrFail('DB_USER')),
+    password: String(getEnvValueOrFail('DB_PASS')),
     logging: false,
     type: 'postgres',
     entities: [`src/db/models/**/*.ts`],
@@ -28,11 +32,11 @@ export const config: AppConfig = {
     }
   },
   logs: {
-    logToFile: Boolean(getEnvValue('LOG_TO_FILE')),
-    logFile: String(getEnvValue('LOG_FILE'))
+    logOutput: String(getEnvValue('LOG_OUTPUT'))?.split(','),
+    logFile: String(getEnvValueOrFail('LOG_FILE'))
   },
   app: {
-    port: Number(getEnvValue('PORT'))
+    port: Number(getEnvValueOrFail('PORT'))
   },
   routes: {
     v1: {
@@ -45,7 +49,7 @@ interface AppConfig {
   environment: string;
   database: PostgresConnectionOptions;
   logs: {
-    logToFile: boolean;
+    logOutput: string[];
     logFile: string;
   };
   app: {

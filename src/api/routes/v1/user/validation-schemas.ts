@@ -6,7 +6,7 @@ export const createUserRequestSchema = Joi.object({
     .required()
 }).required();
 
-export const createUserResponseSchema = Joi.object({
+export const userResponseSchema = Joi.object({
   id: Joi.string()
     .uuid()
     .required(),
@@ -18,3 +18,8 @@ export const createUserResponseSchema = Joi.object({
     .required(),
   lastAction: Joi.string().isoDate()
 }).required();
+
+export const updateUserRequestSchema = Joi.object({
+  email: Joi.string().email(),
+  role: Joi.string().valid('USER', 'ADMIN')
+});

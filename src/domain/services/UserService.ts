@@ -12,9 +12,9 @@ export class UserService implements IUserService {
     this.userRepository = userRepository;
   }
 
-  async makeUserAsAdmin(userId: string): Promise<IUser> {
+  async updateUser(userId: string, updateData: Partial<Pick<IUser, 'email' | 'role' | 'lastAction'>>): Promise<IUser> {
     try {
-      const updatedUser = await this.userRepository.updateUser(userId, { role: UserRole.ADMIN });
+      const updatedUser = await this.userRepository.updateUser(userId, updateData);
       return updatedUser;
     } catch (error) {
       if (error instanceof DatabaseError) {

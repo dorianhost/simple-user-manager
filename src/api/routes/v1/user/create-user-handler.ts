@@ -1,11 +1,12 @@
-import { Middleware, Context } from 'koa';
-import { validate } from '../../../../heplers/validate';
+import { IMiddleware, RouterContext } from 'koa-router';
+import { validate } from '../../../../helpers/validate';
 import { createUserRequestSchema } from './validation-schemas';
 import { AppError } from '../../../../errors/AppError';
-import { IUserService } from '../../../../domain/interfaces/services/IUserService';
+import { servicesStorage } from '../../../../dependency-injection/ServicesStorage';
+import { ContextState } from '../../../interfaces/IContextState';
 
-export function createUserHandler(userService: IUserService): Middleware {
-  return async function(ctx: Context): Promise<void> {
+export function createUserHandler(): IMiddleware<ContextState> {
+  return async function(ctx: RouterContext<ContextState>): Promise<void> {
     const userInfo = ctx.request.body;
     const { errors, errorMessage } = validate(userInfo, createUserRequestSchema);
 
@@ -13,7 +14,7 @@ export function createUserHandler(userService: IUserService): Middleware {
       throw new AppError(`VALIDATION_ERROR: ${errorMessage}`, errors, 400);
     }
 
-    const createdUser = await userService.createUser(userInfo.email);
+    const createdUser = await servicesStorage.userService.createUser(userInfo.email);
     ctx.body = createdUser;
     ctx.status = 201;
   };

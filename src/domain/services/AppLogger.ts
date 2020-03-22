@@ -1,10 +1,10 @@
 import winston, { Logger } from 'winston';
-import { AppConfig } from '../../config/config';
 import { IAppLogger } from '../interfaces/services/IAppLogger';
+import { config } from '../../config/config';
 
 export class AppLogger implements IAppLogger {
   private logger: Logger;
-  constructor(private appConfig: AppConfig) {
+  constructor() {
     this.logger = winston.createLogger({
       level: 'info',
 
@@ -21,10 +21,10 @@ export class AppLogger implements IAppLogger {
       exitOnError: false
     });
 
-    if (this.appConfig.environment !== 'development') {
+    if (config.environment !== 'development') {
       this.logger.add(
         new winston.transports.File({
-          filename: this.appConfig.logs.logFile,
+          filename: config.logs.logFile,
           format: winston.format.combine(winston.format.timestamp(), winston.format.json())
         })
       );

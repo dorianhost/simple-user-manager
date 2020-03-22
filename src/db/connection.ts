@@ -1,13 +1,11 @@
 import { Connection, createConnection } from 'typeorm';
-import { AppConfig } from '../config/config';
-import { container } from '../dependency-injection/container';
+import { config } from '../config/config';
 
 let connection: Connection | undefined;
 
 export async function getConnection(): Promise<Connection> {
   if (!connection) {
-    const appConfig = container.resolve<AppConfig>('appConfig');
-    connection = await createConnection(appConfig.database);
+    connection = await createConnection(config.database);
   }
 
   return connection;

@@ -11,10 +11,9 @@ function getEnvValue(envKey: string): string | number | boolean | undefined {
   return value;
 }
 
-export class AppConfig {
-  public environment = String(getEnvValue('NODE_ENV'));
-
-  public database: PostgresConnectionOptions = {
+export const config: AppConfig = {
+  environment: String(getEnvValue('NODE_ENV')),
+  database: {
     host: String(getEnvValue('DB_HOST')),
     port: Number(getEnvValue('DB_PORT')),
     database: String(getEnvValue('DB_NAME')),
@@ -27,14 +26,24 @@ export class AppConfig {
     cli: {
       migrationsDir: 'migrations'
     }
-  };
-
-  public logs = {
+  },
+  logs: {
     logToFile: Boolean(getEnvValue('LOG_TO_FILE')),
     logFile: String(getEnvValue('LOG_FILE'))
-  };
-
-  public app = {
+  },
+  app: {
     port: Number(getEnvValue('PORT'))
+  }
+};
+
+interface AppConfig {
+  environment: string;
+  database: PostgresConnectionOptions;
+  logs: {
+    logToFile: boolean;
+    logFile: string;
+  };
+  app: {
+    port: number;
   };
 }

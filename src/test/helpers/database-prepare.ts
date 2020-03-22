@@ -1,8 +1,7 @@
 import { getConnection } from '../../db/connection';
-import { container } from '../../dependency-injection/container';
+import { config } from '../../config/config';
 
 beforeAll(() => {
-  const config = container.cradle.appConfig;
   config.database = {
     ...config.database,
     database: config.database.database + '_test',

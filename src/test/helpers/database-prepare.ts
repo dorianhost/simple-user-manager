@@ -1,5 +1,3 @@
-process.env.ENV = 'test';
-
 import { getConnection } from '../../db/connection';
 import { config } from '../../config/config';
 

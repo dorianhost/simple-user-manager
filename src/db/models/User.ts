@@ -1,6 +1,6 @@
 import { Entity, PrimaryColumn, Column, CreateDateColumn, Unique } from 'typeorm';
 import { UserRole } from '../../domain/interfaces/entities/enums/UserRole';
-import { User } from '../../domain/interfaces/entities/User';
+import { IUser } from '../../domain/interfaces/entities/IUser';
 
 @Entity('user')
 @Unique(['email'])
@@ -38,8 +38,8 @@ export class UserModel {
   })
   public createdAt: Date;
 
-  toUser(): User {
-    const user: User = {
+  toUser(): IUser {
+    const user: IUser = {
       id: this.id,
       email: this.email,
       role: this.role

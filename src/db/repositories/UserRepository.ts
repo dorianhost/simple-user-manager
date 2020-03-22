@@ -1,6 +1,6 @@
 import { UserModel } from '../models/User';
-import { User } from '../../domain/interfaces/entities/User';
-import { IUserRepository } from '../../domain/interfaces/repositories/UserRepository';
+import { IUser } from '../../domain/interfaces/entities/IUser';
+import { IUserRepository } from '../../domain/interfaces/repositories/IUserRepository';
 import { BaseRepository } from './base';
 import { DatabaseError } from '../../errors/DatabaseError';
 
@@ -12,7 +12,7 @@ class UserRepository extends BaseRepository<UserModel> implements IUserRepositor
     return userModel?.toUser();
   }
 
-  async createUser(user: User): Promise<User> {
+  async createUser(user: IUser): Promise<IUser> {
     const repository = await this.getRepository();
 
     const userCountWithSameEmail = await repository.count({
@@ -26,7 +26,7 @@ class UserRepository extends BaseRepository<UserModel> implements IUserRepositor
     return user;
   }
 
-  async getAll(): Promise<User[]> {
+  async getAll(): Promise<IUser[]> {
     const repository = await this.getRepository();
 
     const userModels = await repository.find();

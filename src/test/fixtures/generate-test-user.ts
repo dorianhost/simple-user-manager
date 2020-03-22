@@ -1,8 +1,8 @@
 import faker from 'faker';
-import { User } from '../../domain/interfaces/entities/User';
+import { IUser } from '../../domain/interfaces/entities/IUser';
 import { UserRole } from '../../domain/interfaces/entities/enums/UserRole';
 
-export function generateTestUser(): User {
+export function generateTestUser(): IUser {
   return {
     id: faker.random.uuid(),
     email: faker.internet.email(),

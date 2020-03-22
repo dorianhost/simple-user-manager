@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { getConnection } from '../connection';
 
 export abstract class BaseRepository<EntityModel> {
-  private entityName: string;
+  protected entityName: string;
   private repository: Repository<EntityModel>;
 
   constructor(entityname: string) {

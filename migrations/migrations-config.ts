@@ -1,2 +1,2 @@
-import { config } from '../src/config/config';
-module.exports = config.database;
+import { AppConfig } from '../src/config/config';
+module.exports = AppConfig.prototype.database;

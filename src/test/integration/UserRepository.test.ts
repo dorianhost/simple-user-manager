@@ -3,12 +3,14 @@ import '../helpers/database-prepare';
 import faker from 'faker';
 import SQL from 'sql-template-strings';
 import { generateTestUser } from '../fixtures/generate-test-user';
-import { userRepository } from '../../db/repositories/UserRepository';
 import { rawSQL } from '../../db/connection';
 import { UserModel } from '../../db/models/User';
 import { DatabaseError } from '../../errors/DatabaseError';
+import { container } from '../../dependency-injection/container';
+import { IUserRepository } from '../../domain/interfaces/repositories/IUserRepository';
 
 describe('UserRepository', () => {
+  const userRepository = container.resolve<IUserRepository>('userRepository');
   const getUserFromDb = async (userId: string): Promise<UserModel> => {
     const query = SQL`SELECT 
                         id,

@@ -9,7 +9,8 @@
     "migrate:generate": "ts-node ./node_modules/.bin/typeorm migration:generate --config migrations/migrations-config -n",
     "migrate": "ts-node ./node_modules/.bin/typeorm migration:run --config migrations/migrations-config",
     "migrate:revert": "ts-node ./node_modules/.bin/typeorm migration:revert --config migrations/migrations-config",
-    "test:integration": "NODE_ENV=test jest --runInBand --config jest.config.integration.json"
+    "test:integration": "NODE_ENV=test jest --runInBand --config jest.config.integration.json",
+    "test:unit": "NODE_ENV=test jest --config jest.config.unit.json"
   },
   "devDependencies": {
     "@types/faker": "^4.1.10",
@@ -31,7 +32,9 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "awilix": "^4.2.5",
     "pg": "^7.18.2",
+    "reflect-metadata": "^0.1.13",
     "sql-template-strings": "^2.2.2",
     "typeorm": "^0.2.24",
     "uuid": "^7.0.2",

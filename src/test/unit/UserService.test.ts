@@ -1,0 +1,33 @@
+import { container } from '../../dependency-injection/container';
+import { IUserService } from '../../domain/interfaces/services/IUserService';
+import { UserRepository } from '../../db/repositories/UserRepository';
+import { generateTestUser } from '../fixtures/generate-test-user';
+
+describe('UserService', () => {
+  const userService = container.resolve<IUserService>('userService');
+
+  describe('#createUser', () => {
+    let createUserRepoMock: jest.SpyInstance;
+
+    beforeAll(() => {
+      createUserRepoMock = jest.spyOn(UserRepository.prototype, 'createUser');
+    });
+
+    afterAll(() => jest.restoreAllMocks());
+
+    afterEach(() => jest.resetAllMocks());
+
+    it('should successfully create user', async () => {
+      console.log(process.env.NODE_ENV);
+      const user = generateTestUser();
+      createUserRepoMock.mockResolvedValue(user);
+      const createUserResult = await userService.createUser(user.email);
+
+      expect(createUserResult).toEqual(user);
+      expect(createUserRepoMock).toHaveBeenCalledTimes(1);
+
+      const calledParams = createUserRepoMock.mock.calls[0][0];
+      expect(calledParams.email).toEqual(user.email);
+    });
+  });
+});

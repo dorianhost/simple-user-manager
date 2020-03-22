@@ -4,7 +4,11 @@ import { IUserRepository } from '../../domain/interfaces/repositories/IUserRepos
 import { BaseRepository } from './base';
 import { DatabaseError } from '../../errors/DatabaseError';
 
-class UserRepository extends BaseRepository<UserModel> implements IUserRepository {
+export class UserRepository extends BaseRepository<UserModel> implements IUserRepository {
+  constructor() {
+    super(UserModel.name);
+  }
+
   async updateUser(userId: string, updateData: Omit<Partial<IUser>, 'id'>): Promise<IUser> {
     const repository = await this.getRepository();
 
@@ -59,5 +63,3 @@ class UserRepository extends BaseRepository<UserModel> implements IUserRepositor
     return userModels.map(userModel => userModel.toUser());
   }
 }
-
-export const userRepository = new UserRepository(UserModel.name);

@@ -10,18 +10,18 @@ export const logger = winston.createLogger({
         winston.format.colorize(),
         winston.format.timestamp(),
         winston.format.align(),
-        winston.format.printf(info => `${info.timestamp} [${info.level}]: ${info.message}`)
-      )
-    })
+        winston.format.printf(info => `${info.timestamp} [${info.level}]: ${info.message}`),
+      ),
+    }),
   ],
-  exitOnError: false
+  exitOnError: false,
 });
 
 if (config.environment !== 'development') {
   logger.add(
     new winston.transports.File({
-      filename: config.logFile,
-      format: winston.format.combine(winston.format.timestamp(), winston.format.json())
-    })
+      filename: config.logs.logFile,
+      format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
+    }),
   );
 }

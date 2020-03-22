@@ -33,6 +33,11 @@ export const config: AppConfig = {
   },
   app: {
     port: Number(getEnvValue('PORT'))
+  },
+  routes: {
+    v1: {
+      user: '/api/v1/user'
+    }
   }
 };
 
@@ -45,5 +50,10 @@ interface AppConfig {
   };
   app: {
     port: number;
+  };
+  routes: {
+    v1: {
+      user: string;
+    };
   };
 }

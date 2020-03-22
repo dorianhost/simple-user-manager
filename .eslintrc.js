@@ -19,6 +19,7 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': ['error', { vars: 'all', args: 'none' }],
-    '@typescript-eslint/interface-name-prefix': ['off']
+    '@typescript-eslint/interface-name-prefix': ['off'],
+    'no-console': ['error']
   }
 };

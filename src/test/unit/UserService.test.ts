@@ -18,7 +18,6 @@ describe('UserService', () => {
     afterEach(() => jest.resetAllMocks());
 
     it('should successfully create user', async () => {
-      console.log(process.env.NODE_ENV);
       const user = generateTestUser();
       createUserRepoMock.mockResolvedValue(user);
       const createUserResult = await userService.createUser(user.email);

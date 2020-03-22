@@ -16,8 +16,7 @@ describe('UserRepository', () => {
                         id,
                         email,
                         last_action as "lastAction",
-                        role,
-                        created_at as "createdAt"
+                        role
                       FROM "user" WHERE id=${userId}`;
     return (await rawSQL<UserModel>(query.text, query.values))[0];
   };

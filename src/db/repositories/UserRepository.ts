@@ -28,10 +28,10 @@ export class UserRepository extends BaseRepository<UserModel> implements IUserRe
 
     return repository.manager.transaction<IUser>(async transactionManager => {
       await transactionManager.update(this.entityName, userId, updateData);
-      const result = await transactionManager.findOne<IUser>(this.entityName, userId);
+      const result = await transactionManager.findOne<UserModel>(this.entityName, userId);
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return result!;
+      return result!.toUser();
     });
   }
 
@@ -52,7 +52,7 @@ export class UserRepository extends BaseRepository<UserModel> implements IUserRe
       throw new DatabaseError(`User with email ${user.email} already exists`);
     }
 
-    await repository.insert(user);
+    await repository.insert({ ...user });
     return user;
   }
 

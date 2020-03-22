@@ -5,7 +5,33 @@ import { BaseRepository } from './base';
 import { DatabaseError } from '../../errors/DatabaseError';
 
 class UserRepository extends BaseRepository<UserModel> implements IUserRepository {
-  async getUserById(userId: string): Promise<User | undefined> {
+  async updateUser(userId: string, updateData: Omit<Partial<IUser>, 'id'>): Promise<IUser> {
+    const repository = await this.getRepository();
+
+    const usersCountWithId = await repository.count({ id: userId });
+    if (!usersCountWithId) {
+      throw new DatabaseError(`User ${userId} does not exists`);
+    }
+
+    if (updateData.email) {
+      const userCountWithSameEmail = await repository.count({
+        email: updateData.email
+      });
+      if (userCountWithSameEmail > 0) {
+        throw new DatabaseError(`User with email ${updateData.email} already exists`);
+      }
+    }
+
+    return repository.manager.transaction<IUser>(async transactionManager => {
+      await transactionManager.update(this.entityName, userId, updateData);
+      const result = await transactionManager.findOne<IUser>(this.entityName, userId);
+
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return result!;
+    });
+  }
+
+  async getUserById(userId: string): Promise<IUser | undefined> {
     const repository = await this.getRepository();
     const userModel = await repository.findOne(userId);
 

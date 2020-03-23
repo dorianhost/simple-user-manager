@@ -30,7 +30,7 @@ Verify docker environment
 docker-compose ps
        Name                     Command               State           Ports         
 ------------------------------------------------------------------------------------
-security-plugin-db   docker-entrypoint.sh postg ...   Up      0.0.0.0:5432->5432/tcp
+simple-user-manager-db   docker-entrypoint.sh postg ...   Up      0.0.0.0:5432->5432/tcp
 ```
 
 Migrations will create all necessary database structure:

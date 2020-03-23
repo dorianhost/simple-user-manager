@@ -5,7 +5,7 @@ services:
     image: postgres:12
     ports:
       - "5432:5432"
-    container_name: security-plugin-db
+    container_name: simple-user-manager-db
     volumes:
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     command: postgres -c listen_addresses='*'

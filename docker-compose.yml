@@ -2,10 +2,12 @@ version: "3"
 
 services:
   postgres:
-    image: postgres:12
+    image: postgres:12.2
     ports:
       - "5432:5432"
     container_name: simple-user-manager-db
+    environment:
+      - POSTGRES_PASSWORD=password
     volumes:
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     command: postgres -c listen_addresses='*'

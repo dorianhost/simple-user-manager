@@ -2,7 +2,7 @@ import { IMiddleware, RouterContext } from 'koa-router';
 import { validate } from '../../../../helpers/validate';
 import { createUserRequestSchema } from './validation-schemas';
 import { AppError } from '../../../../errors/AppError';
-import { servicesStorage } from '../../../../dependency-injection/ServicesStorage';
+import { servicesStorage } from '../../../../domain/ServicesStorage';
 import { ContextState } from '../../../interfaces/IContextState';
 
 export function createUserHandler(): IMiddleware<ContextState> {

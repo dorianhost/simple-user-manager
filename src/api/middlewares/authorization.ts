@@ -1,7 +1,7 @@
 import { Next } from 'koa';
 import { RouterContext, IMiddleware } from 'koa-router';
 import { AppError } from '../../errors/AppError';
-import { servicesStorage } from '../../dependency-injection/ServicesStorage';
+import { servicesStorage } from '../../domain/ServicesStorage';
 import { ContextState } from '../interfaces/IContextState';
 
 export function authorizationMiddleware(): IMiddleware<ContextState> {

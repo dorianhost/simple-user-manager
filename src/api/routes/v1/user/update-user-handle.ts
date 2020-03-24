@@ -1,6 +1,6 @@
 import { IMiddleware, RouterContext } from 'koa-router';
 import { ContextState } from '../../../interfaces/IContextState';
-import { servicesStorage } from '../../../../dependency-injection/ServicesStorage';
+import { servicesStorage } from '../../../../domain/ServicesStorage';
 import { updateUserRequestSchema } from './validation-schemas';
 import { validate } from '../../../../helpers/validate';
 import { AppError } from '../../../../errors/AppError';

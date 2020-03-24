@@ -1,11 +1,10 @@
 import stringify from 'json-stringify-safe';
 import { Context, Next } from 'koa';
 import { AppError } from '../../errors/AppError';
-import { container } from '../../dependency-injection/container';
-import { IAppLogger } from '../../domain/interfaces/services/IAppLogger';
+import { servicesStorage } from '../../domain/ServicesStorage';
 
 export async function handleErrors(ctx: Context, next: Next): Promise<void> {
-  const appLogger = container.resolve<IAppLogger>('appLogger');
+  const appLogger = servicesStorage.appLogger;
   try {
     await next();
 

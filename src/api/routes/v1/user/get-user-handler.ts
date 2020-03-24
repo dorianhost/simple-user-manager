@@ -2,7 +2,7 @@ import { IMiddleware, RouterContext } from 'koa-router';
 import { ContextState } from '../../../interfaces/IContextState';
 import { UserRole } from '../../../../domain/interfaces/entities/enums/UserRole';
 import { AppError } from '../../../../errors/AppError';
-import { servicesStorage } from '../../../../dependency-injection/ServicesStorage';
+import { servicesStorage } from '../../../../domain/ServicesStorage';
 
 export function getUserHandler(): IMiddleware<ContextState> {
   return async function(ctx: RouterContext<ContextState>): Promise<void> {

@@ -1,7 +1,4 @@
 {
-	"testMatch": [
-		"**/test/**/*.test.ts"
-	],
 	"transform": {
 		"^.+\\.tsx?$": "ts-jest"
 	},

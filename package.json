@@ -9,9 +9,9 @@
     "migrate:generate": "ts-node ./node_modules/.bin/typeorm migration:generate --config migrations/migrations-config -n",
     "migrate": "ts-node ./node_modules/.bin/typeorm migration:run --config migrations/migrations-config",
     "migrate:revert": "ts-node ./node_modules/.bin/typeorm migration:revert --config migrations/migrations-config",
-    "test:integration": "NODE_ENV=test jest --runInBand --config jest.config.integration.json",
-    "test:unit": "NODE_ENV=test jest --config jest.config.unit.json",
-    "test:acceptance": "NODE_ENV=test jest --runInBand --config jest.config.acceptance.json",
+    "test:integration": "NODE_ENV=test jest .*/test/integration/.*\\.test\\.ts --runInBand --config jest.config.integration.json",
+    "test:unit": "NODE_ENV=test jest .*/test/unit/.*\\.test\\.ts --config jest.config.json",
+    "test:acceptance": "NODE_ENV=test jest .*/test/acceptance/.*\\.test\\.ts --runInBand --config jest.config.json",
     "test": "NODE_ENV=test jest --runInBand --config jest.config.json",
     "start:dev": "node -r ts-node/register -r dotenv-safe/config ./src/index.ts"
   },

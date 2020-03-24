@@ -28,21 +28,21 @@ export const config: AppConfig = {
     entities: [`src/db/models/**/*.ts`],
     migrations: ['migrations/**/*.ts'],
     cli: {
-      migrationsDir: 'migrations'
-    }
+      migrationsDir: 'migrations',
+    },
   },
   logs: {
     logOutput: String(getEnvValue('LOG_OUTPUT'))?.split(','),
-    logFile: String(getEnvValueOrFail('LOG_FILE'))
+    logFile: String(getEnvValueOrFail('LOG_FILE')),
   },
   app: {
-    port: Number(getEnvValueOrFail('PORT'))
+    port: Number(getEnvValueOrFail('PORT')),
   },
   routes: {
     v1: {
-      user: '/api/v1/user'
-    }
-  }
+      user: '/api/v1/user',
+    },
+  },
 };
 
 interface AppConfig {

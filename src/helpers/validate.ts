@@ -2,7 +2,7 @@ import Joi from '@hapi/joi';
 
 export function validate(paramsToValidate: object, schema: Joi.ObjectSchema): { errors?: any; errorMessage?: string } {
   const validationResult: Joi.ValidationResult = schema.validate(paramsToValidate, {
-    abortEarly: false
+    abortEarly: false,
   });
 
   const result: Record<string, string | string[]> = {};

@@ -18,7 +18,7 @@ container.register({
     .proxy(),
 
   //services
-  userService: asClass<IUserService>(UserService).singleton()
+  userService: asClass<IUserService>(UserService).singleton(),
 });
 
 export { container };

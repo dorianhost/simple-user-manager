@@ -3,8 +3,7 @@ import { Server } from 'http';
 import { config } from './config/config';
 import { systemInit, systemShutdown } from './system';
 import { app } from './api/app';
-import { container } from './dependency-injection/container';
-import { IAppLogger } from './domain/interfaces/services/IAppLogger';
+import { servicesStorage } from './domain/ServicesStorage';
 
 let server: Server;
 
@@ -24,9 +23,8 @@ async function gracefulShutdown(): Promise<void> {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-(() => {
-  const appLogger = container.resolve<IAppLogger>('appLogger');
+((): void => {
+  const appLogger = servicesStorage.appLogger;
   process.nextTick(async () => {
     await systemInit();
 

@@ -20,6 +20,7 @@ module.exports = {
   rules: {
     'no-unused-vars': ['error', { vars: 'all', args: 'none' }],
     '@typescript-eslint/interface-name-prefix': ['off'],
-    'no-console': ['error']
+    'no-console': ['error'],
+    '@typescript-eslint/explicit-function-return-type': ['error']
   }
 };

@@ -13,7 +13,8 @@
     "test:unit": "NODE_ENV=test jest .*/test/unit/.*\\.test\\.ts --config jest.config.json",
     "test:acceptance": "NODE_ENV=test jest .*/test/acceptance/.*\\.test\\.ts --runInBand --config jest.config.json",
     "test": "NODE_ENV=test jest --runInBand --config jest.config.json",
-    "start:dev": "node -r ts-node/register -r dotenv-safe/config ./src/index.ts"
+    "start:dev": "node -r ts-node/register -r dotenv-safe/config ./src/index.ts",
+    "eslint": "eslint src/**/*.ts --fix"
   },
   "devDependencies": {
     "@types/faker": "^4.1.10",

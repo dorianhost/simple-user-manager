@@ -7,7 +7,7 @@ import { authorizationMiddleware } from './middlewares/authorization';
 const app = new Koa();
 
 app
-  .use(handleErrors)
+  .use(handleErrors())
   .use(bodyParser())
   .use(v1UnauthorizedRouter.routes())
   .use(authorizationMiddleware())

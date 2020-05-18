@@ -2,9 +2,10 @@ import { IMiddleware, RouterContext } from 'koa-router';
 import { ContextState } from '../../../interfaces/IContextState';
 import { UserRole } from '../../../../domain/interfaces/entities/enums/UserRole';
 import { AppError } from '../../../../errors/AppError';
-import { servicesStorage } from '../../../../domain/ServicesStorage';
+import { IUserService } from '../../../../domain/interfaces/services/IUserService';
+import { container } from '../../../../dependency-injection/container';
 
-export function getUserHandler(): IMiddleware<ContextState> {
+function getUserHandlerBuilder(userService: IUserService): IMiddleware<ContextState> {
   return async function(ctx: RouterContext<ContextState>): Promise<void> {
     const userId = ctx.params.id;
 
@@ -12,7 +13,10 @@ export function getUserHandler(): IMiddleware<ContextState> {
       throw new AppError('ACCESS_DENIED', `You don't have permission to that resource`);
     }
 
-    ctx.body = await servicesStorage.userService.getUser(userId);
+    ctx.body = await userService.getUser(userId);
     ctx.status = 200;
   };
 }
+
+export const getUserHandler = (): IMiddleware<ContextState> =>
+  container.build(getUserHandlerBuilder);

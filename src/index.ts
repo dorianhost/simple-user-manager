@@ -1,33 +1,14 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Server } from 'http';
-import { config } from './config/config';
-import { systemInit, systemShutdown } from './system';
+import { container } from './dependency-injection/container';
+import { ApplicationWrapper } from './domain/services/ApplicationWrapper';
+import { IAppLogger } from './domain/interfaces/services/IAppLogger';
 import { app } from './api/app';
-import { servicesStorage } from './domain/ServicesStorage';
+import { config } from './config/config';
 
 let server: Server;
 
-async function gracefulShutdown(): Promise<void> {
-  try {
-    setTimeout(() => {
-      process.exit(1);
-    }, 10000);
-
-    await systemShutdown();
-
-    if (server) {
-      server.close();
-    }
-  } finally {
-    process.exit(0);
-  }
-}
-
-((): void => {
-  const appLogger = servicesStorage.appLogger;
-  process.nextTick(async () => {
-    await systemInit();
-
+const startApp = (): void =>
+  container.build((appLogger: IAppLogger) => {
     server = app
       .listen(config.app.port)
       .on('listening', () => {
@@ -39,47 +20,14 @@ async function gracefulShutdown(): Promise<void> {
       });
   });
 
-  process.on('uncaughtException', async error => {
-    appLogger.logError(`UNCAUGHT_EXCEPTION ${error}`);
+const stopApp = (): void => {
+  if (server) {
+    server.close();
+  }
+};
 
-    try {
-      await systemShutdown();
-      if (server) {
-        server.close();
-      }
-    } finally {
-      process.exit(1);
-    }
-  });
+const applicationWrapper = container.build(ApplicationWrapper);
 
-  process.on('unhandledRejection', async error => {
-    appLogger.logError(`UNCAUGHT_REJECTION ${error}`);
+applicationWrapper.setupShutdownCallback(stopApp);
 
-    try {
-      await systemShutdown();
-      if (server) {
-        server.close();
-      }
-    } finally {
-      process.exit(1);
-    }
-  });
-
-  process.on('SIGTERM', async () => {
-    appLogger.logInfo('SIGTERM Graceful shutdown...');
-
-    await gracefulShutdown();
-  });
-
-  process.on('SIGINT', async () => {
-    appLogger.logInfo('SIGTERM Graceful shutdown...');
-
-    await gracefulShutdown();
-  });
-
-  process.on('SIGHUP', async () => {
-    appLogger.logInfo('SIGTERM Graceful shutdown...');
-
-    await gracefulShutdown();
-  });
-})();
+applicationWrapper.startApplication(startApp);

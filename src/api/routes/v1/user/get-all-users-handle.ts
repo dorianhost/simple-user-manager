@@ -1,10 +1,14 @@
 import { IMiddleware, RouterContext } from 'koa-router';
 import { ContextState } from '../../../interfaces/IContextState';
-import { servicesStorage } from '../../../../domain/ServicesStorage';
+import { IUserService } from '../../../../domain/interfaces/services/IUserService';
+import { container } from '../../../../dependency-injection/container';
 
-export function getAllUsersHandler(): IMiddleware<ContextState> {
+function getAllUsersHandlerBuilder(userService: IUserService): IMiddleware<ContextState> {
   return async function(ctx: RouterContext<ContextState>): Promise<void> {
-    ctx.body = await servicesStorage.userService.getAllUsers();
+    ctx.body = await userService.getAllUsers();
     ctx.status = 200;
   };
 }
+
+export const getAllUsersHandler = (): IMiddleware<ContextState> =>
+  container.build(getAllUsersHandlerBuilder);

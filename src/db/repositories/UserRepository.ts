@@ -11,7 +11,6 @@ export class UserRepository extends BaseRepository<UserModel> implements IUserRe
 
   async updateUser(userId: string, updateData: Omit<Partial<IUser>, 'id'>): Promise<IUser> {
     const repository = await this.getRepository();
-
     const usersCountWithId = await repository.count({ id: userId });
     if (!usersCountWithId) {
       throw new DatabaseError(`User ${userId} does not exists`);
@@ -19,7 +18,7 @@ export class UserRepository extends BaseRepository<UserModel> implements IUserRe
 
     if (updateData.email) {
       const userCountWithSameEmail = await repository.count({
-        email: updateData.email
+        email: updateData.email,
       });
       if (userCountWithSameEmail > 0) {
         throw new DatabaseError(`User with email ${updateData.email} already exists`);
@@ -46,7 +45,7 @@ export class UserRepository extends BaseRepository<UserModel> implements IUserRe
     const repository = await this.getRepository();
 
     const userCountWithSameEmail = await repository.count({
-      email: user.email
+      email: user.email,
     });
     if (userCountWithSameEmail > 0) {
       throw new DatabaseError(`User with email ${user.email} already exists`);

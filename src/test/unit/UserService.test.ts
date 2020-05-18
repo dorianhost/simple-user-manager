@@ -1,9 +1,10 @@
 import { UserRepository } from '../../db/repositories/UserRepository';
 import { generateTestUser } from '../fixtures/generate-test-user';
-import { servicesStorage } from '../../domain/ServicesStorage';
+import { container } from '../../dependency-injection/container';
+import { IUserService } from '../../domain/interfaces/services/IUserService';
 
 describe('UserService', () => {
-  const userService = servicesStorage.userService;
+  const userService: IUserService = container.cradle.userService;
 
   describe('#createUser', () => {
     let createUserRepoMock: jest.SpyInstance;

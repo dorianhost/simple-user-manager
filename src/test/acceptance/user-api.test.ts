@@ -40,7 +40,10 @@ describe('User API', () => {
         .send({ role: UserRole.ADMIN })
         .expect(200);
 
-      expect({ id: result.body.id, role: result.body.role }).toMatchObject({ id: user.id, role: UserRole.ADMIN });
+      expect({ id: result.body.id, role: result.body.role }).toMatchObject({
+        id: user.id,
+        role: UserRole.ADMIN,
+      });
     });
   });
 });

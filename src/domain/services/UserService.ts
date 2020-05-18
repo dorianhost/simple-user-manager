@@ -12,7 +12,10 @@ export class UserService implements IUserService {
     this.userRepository = userRepository;
   }
 
-  async updateUser(userId: string, updateData: Partial<Pick<IUser, 'email' | 'role' | 'lastAction'>>): Promise<IUser> {
+  async updateUser(
+    userId: string,
+    updateData: Partial<Pick<IUser, 'email' | 'role' | 'lastAction'>>,
+  ): Promise<IUser> {
     try {
       const updatedUser = await this.userRepository.updateUser(userId, updateData);
       return updatedUser;
@@ -28,7 +31,7 @@ export class UserService implements IUserService {
     const user: IUser = {
       id: uuidv4(),
       email,
-      role: UserRole.USER
+      role: UserRole.USER,
     };
 
     try {

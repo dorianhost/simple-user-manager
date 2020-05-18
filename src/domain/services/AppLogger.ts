@@ -14,19 +14,19 @@ export class AppLogger implements IAppLogger {
             winston.format.colorize(),
             winston.format.timestamp(),
             winston.format.align(),
-            winston.format.printf(info => `${info.timestamp} [${info.level}]: ${info.message}`)
-          )
-        })
+            winston.format.printf(info => `${info.timestamp} [${info.level}]: ${info.message}`),
+          ),
+        }),
       ],
-      exitOnError: false
+      exitOnError: false,
     });
 
     if (config.environment !== 'development') {
       this.logger.add(
         new winston.transports.File({
           filename: config.logs.logFile,
-          format: winston.format.combine(winston.format.timestamp(), winston.format.json())
-        })
+          format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
+        }),
       );
     }
   }

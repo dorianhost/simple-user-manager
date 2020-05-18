@@ -6,18 +6,19 @@ import { generateTestUser } from '../fixtures/generate-test-user';
 import { rawSQL } from '../../db/connection';
 import { UserModel } from '../../db/models/User';
 import { DatabaseError } from '../../errors/DatabaseError';
-import { container } from '../../dependency-injection/container';
 import { IUserRepository } from '../../domain/interfaces/repositories/IUserRepository';
+import { container } from '../../dependency-injection/container';
 
 describe('UserRepository', () => {
-  const userRepository = container.resolve<IUserRepository>('userRepository');
+  const userRepository: IUserRepository = container.cradle.userRepository;
+
   const getUserFromDb = async (userId: string): Promise<UserModel> => {
     const query = SQL`SELECT 
-                        id,
-                        email,
-                        last_action as "lastAction",
-                        role
-                      FROM "user" WHERE id=${userId}`;
+    id,
+    email,
+    last_action as "lastAction",
+    role
+    FROM "user" WHERE id=${userId}`;
     return (await rawSQL<UserModel>(query.text, query.values))[0];
   };
 
@@ -56,14 +57,18 @@ describe('UserRepository', () => {
     });
 
     it('should fail if user does not exists', async () => {
-      await expect(userRepository.updateUser(faker.random.uuid(), {})).rejects.toThrow(DatabaseError);
+      await expect(userRepository.updateUser(faker.random.uuid(), {})).rejects.toThrow(
+        DatabaseError,
+      );
     });
 
     it('should fail if email already exists', async () => {
       const firstUser = await userRepository.createUser(generateTestUser());
       const secondUser = await userRepository.createUser(generateTestUser());
 
-      await expect(userRepository.updateUser(firstUser.id, { email: secondUser.email })).rejects.toThrow(DatabaseError);
+      await expect(
+        userRepository.updateUser(firstUser.id, { email: secondUser.email }),
+      ).rejects.toThrow(DatabaseError);
     });
   });
 });

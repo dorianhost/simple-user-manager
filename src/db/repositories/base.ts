@@ -1,17 +1,14 @@
 import { Repository } from 'typeorm';
-import { getConnection } from '../connection';
+import { getDbConnection } from '../connection';
 
 export abstract class BaseRepository<EntityModel> {
-  protected entityName: string;
   private repository: Repository<EntityModel>;
 
-  constructor(entityname: string) {
-    this.entityName = entityname;
-  }
+  constructor(protected entityName: string) {}
 
   protected async getRepository(): Promise<Repository<EntityModel>> {
     if (!this.repository) {
-      const connection = await getConnection();
+      const connection = await getDbConnection();
       this.repository = connection.getRepository<EntityModel>(this.entityName);
     }
 

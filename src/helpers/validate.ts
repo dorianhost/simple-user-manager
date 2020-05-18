@@ -1,6 +1,9 @@
 import Joi from '@hapi/joi';
 
-export function validate(paramsToValidate: object, schema: Joi.ObjectSchema): { errors?: any; errorMessage?: string } {
+export function validate(
+  paramsToValidate: object,
+  schema: Joi.ObjectSchema,
+): { errors?: any; errorMessage?: string } {
   const validationResult: Joi.ValidationResult = schema.validate(paramsToValidate, {
     abortEarly: false,
   });
